@@ -1,9 +1,5 @@
 const DEFAULT_TIMEOUT_MS = 15_000;
 
-/**
- * Fetch JSON with a request timeout and a uniform error on non-2xx responses.
- * Both providers go through here so they only have to worry about mapping.
- */
 export async function getJson<T>(url: string, headers: Record<string, string>): Promise<T> {
   let response: Response;
   try {

@@ -49,15 +49,13 @@ async function main(options: { since?: string; format: "terminal" | "md" }): Pro
   const since = resolveSince(options.since);
   const now = new Date();
 
-  // Fetch every configured provider at once. A provider that fails warns and
-  // returns null so the others still report; if they all fail we exit non-zero.
   const jobs: Promise<WorkItem[] | null>[] = [];
   if (config.gitlab) jobs.push(guard("GitLab", fetchGitLab(config.gitlab, since)));
   if (config.jira) jobs.push(guard("Jira", fetchJira(config.jira, since)));
 
   const results = await Promise.all(jobs);
   if (results.every((result) => result === null)) {
-    process.exit(1); // every provider errored — warnings already printed
+    process.exit(1);
   }
 
   const items = results.filter((result): result is WorkItem[] => result !== null).flat();
@@ -65,7 +63,6 @@ async function main(options: { since?: string; format: "terminal" | "md" }): Pro
   console.log(output);
 }
 
-/** Run a provider, turning any failure into a warning and a null result. */
 async function guard(name: string, job: Promise<WorkItem[]>): Promise<WorkItem[] | null> {
   try {
     return await job;

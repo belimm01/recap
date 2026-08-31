@@ -16,11 +16,6 @@ export interface Config {
   jira?: JiraConfig;
 }
 
-/**
- * Read config from the environment. A provider is only enabled when all of
- * its variables are present, so you can run recap with just GitLab, just
- * Jira, or both.
- */
 export function loadConfig(): Config {
   const config: Config = {};
 

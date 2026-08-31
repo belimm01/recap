@@ -14,7 +14,7 @@ const item = (bucket: Bucket): WorkItem => ({
 });
 
 test("resolveSince defaults to the last working day", () => {
-  const monday = new Date(2026, 7, 31, 9); // Mon 31 Aug 2026
+  const monday = new Date(2026, 7, 31, 9);
   const tuesday = new Date(2026, 8, 1, 9);
   assert.equal(monday.getTime() - resolveSince(undefined, monday).getTime(), 3 * DAY);
   assert.equal(tuesday.getTime() - resolveSince(undefined, tuesday).getTime(), 1 * DAY);
