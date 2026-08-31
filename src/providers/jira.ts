@@ -3,7 +3,7 @@ import { getJson } from "../http.js";
 import type { Bucket, WorkItem } from "../types.js";
 
 const PAGE_SIZE = 50;
-const MAX_ISSUES = 200; // don't drown a standup in a huge backlog
+const MAX_ISSUES = 200;
 
 interface JiraSearchResponse {
   issues?: JiraIssue[];
@@ -18,10 +18,6 @@ interface JiraIssue {
   };
 }
 
-/**
- * Fetch issues assigned to you that changed since `since`. Jira's status
- * categories (new / indeterminate / done) map cleanly onto our buckets.
- */
 export async function fetchJira(config: JiraConfig, since: Date): Promise<WorkItem[]> {
   const jql = `assignee = currentUser() AND updated >= "${asJiraDate(since)}" ORDER BY updated DESC`;
   const issues: JiraIssue[] = [];
@@ -56,8 +52,6 @@ function toWorkItem(issue: JiraIssue, baseUrl: string): WorkItem {
     title: issue.fields.summary,
     url: `${baseUrl}/browse/${issue.key}`,
     bucket: bucketFor(category),
-    // The concrete status ("In Review", "Blocked") is more useful than the
-    // category, so keep it around as a note.
     notes: [issue.fields.status.name],
   };
 }
@@ -69,7 +63,7 @@ function bucketFor(category: string): Bucket {
 }
 
 function asJiraDate(date: Date): string {
-  return date.toISOString().slice(0, 10); // yyyy-mm-dd
+  return date.toISOString().slice(0, 10);
 }
 
 function basicAuth(user: string, token: string): string {

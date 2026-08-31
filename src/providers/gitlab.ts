@@ -3,7 +3,7 @@ import { getJson } from "../http.js";
 import type { WorkItem } from "../types.js";
 
 const PER_PAGE = 100;
-const MAX_PAGES = 10; // safety net so an odd response can't loop forever
+const MAX_PAGES = 10;
 
 interface GitLabMr {
   iid: number;
@@ -15,13 +15,7 @@ interface GitLabMr {
   references?: { short?: string };
 }
 
-/**
- * Fetch the merge requests you authored or were assigned, touched since
- * `since`. Merged ones count as shipped, open ones as work in progress.
- */
 export async function fetchGitLab(config: GitLabConfig, since: Date): Promise<WorkItem[]> {
-  // Both scopes can return the same MR (you authored and were assigned it),
-  // so collect into a map keyed by URL to de-duplicate.
   const seen = new Map<string, WorkItem>();
 
   for (const scope of ["created_by_me", "assigned_to_me"] as const) {
@@ -56,14 +50,13 @@ async function getMergeRequests(
     const rows = Array.isArray(batch) ? batch : [];
     all.push(...rows);
 
-    if (rows.length < PER_PAGE) break; // last page reached
+    if (rows.length < PER_PAGE) break;
   }
 
   return all;
 }
 
 function toWorkItem(mr: GitLabMr): WorkItem | null {
-  // A closed-but-not-merged MR is usually abandoned — not worth reporting.
   if (mr.state === "closed" || mr.state === "locked") return null;
 
   const notes: string[] = [];

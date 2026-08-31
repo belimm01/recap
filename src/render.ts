@@ -8,7 +8,6 @@ const DATE_FORMAT: Intl.DateTimeFormatOptions = {
   day: "numeric",
 };
 
-/** Markdown you can paste straight into Slack, Teams or a Jira comment. */
 export function renderMarkdown(items: WorkItem[], now = new Date()): string {
   const lines: string[] = [`# Standup — ${now.toLocaleDateString(undefined, DATE_FORMAT)}`];
 
@@ -23,7 +22,6 @@ export function renderMarkdown(items: WorkItem[], now = new Date()): string {
   return lines.join("\n");
 }
 
-/** A colourful version for reading in the terminal. */
 export function renderTerminal(items: WorkItem[], now = new Date()): string {
   const lines: string[] = [pc.bold(`Standup — ${now.toLocaleDateString(undefined, DATE_FORMAT)}`)];
 

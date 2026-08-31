@@ -6,13 +6,6 @@ const UNITS: Record<string, number> = {
   w: 7 * 24 * 60 * 60 * 1000,
 };
 
-/**
- * Work out the start of the reporting window.
- *
- * With no explicit value we look back to the last working day: one day
- * normally, three on a Monday so the weekend doesn't swallow Friday's work.
- * An explicit value like "2d" or "12h" overrides that.
- */
 export function resolveSince(input: string | undefined, now = new Date()): Date {
   if (input) {
     const match = /^(\d+)\s*([hdw])$/.exec(input.trim().toLowerCase());
@@ -23,11 +16,10 @@ export function resolveSince(input: string | undefined, now = new Date()): Date 
     return new Date(now.getTime() - amount * UNITS[match[2]]);
   }
 
-  const daysBack = now.getDay() === 1 ? 3 : 1; // Monday reaches back to Friday
+  const daysBack = now.getDay() === 1 ? 3 : 1;
   return new Date(now.getTime() - daysBack * UNITS.d);
 }
 
-/** Group items into the standup buckets, dropping empty ones. */
 export function groupByBucket(items: WorkItem[]): [Bucket, WorkItem[]][] {
   return BUCKET_ORDER.map(
     (bucket) => [bucket, items.filter((item) => item.bucket === bucket)] as [Bucket, WorkItem[]],
