@@ -33,7 +33,7 @@
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc",
-    "test": "node --import tsx --test \"test/**/*.test.ts\"",
+    "test": "node --import tsx --test test/*.test.ts",
     "lint": "biome check src test",
     "format": "biome check --write src test",
     "prepublishOnly": "npm run build"
