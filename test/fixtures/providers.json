@@ -1,0 +1,22 @@
+{
+  "gitlab": {
+    "created_by_me": [
+      { "iid": 42, "title": "Cache pricing lookups", "web_url": "https://gitlab.example.test/shop/api/-/merge_requests/42", "state": "merged", "draft": false, "has_conflicts": false, "references": { "short": "!42" } },
+      { "iid": 47, "title": "Draft: Add retry to the importer", "web_url": "https://gitlab.example.test/shop/api/-/merge_requests/47", "state": "opened", "draft": true, "has_conflicts": true },
+      { "iid": 48, "title": "Abandoned approach", "web_url": "https://gitlab.example.test/shop/api/-/merge_requests/48", "state": "closed", "draft": false, "has_conflicts": false },
+      { "iid": 49, "title": "Locked request", "web_url": "https://gitlab.example.test/shop/api/-/merge_requests/49", "state": "locked", "draft": false, "has_conflicts": false }
+    ],
+    "assigned_to_me": [
+      { "iid": 47, "title": "Draft: Add retry to the importer", "web_url": "https://gitlab.example.test/shop/api/-/merge_requests/47", "state": "opened", "draft": true, "has_conflicts": true },
+      { "iid": 42, "title": "Update web checkout", "web_url": "https://gitlab.example.test/shop/web/-/merge_requests/42", "state": "opened", "draft": false, "has_conflicts": false, "references": { "short": "!42" } }
+    ]
+  },
+  "jira": {
+    "total": 3,
+    "issues": [
+      { "key": "SHOP-118", "fields": { "summary": "Fix rounding on invoices", "status": { "name": "Released", "statusCategory": { "key": "done" } } } },
+      { "key": "SHOP-131", "fields": { "summary": "Split the settlement job", "status": { "name": "In Review", "statusCategory": { "key": "indeterminate" } } } },
+      { "key": "SHOP-140", "fields": { "summary": "Backfill legacy accounts", "status": { "name": "Backlog", "statusCategory": { "key": "new" } } } }
+    ]
+  }
+}
